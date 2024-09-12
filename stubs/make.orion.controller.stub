@@ -1,0 +1,16 @@
+<?php
+
+namespace {{ namespace }};
+
+use Orion\Http\Controllers\Controller;
+use App\Models\{{ model }};
+
+class {{ class }} extends Controller
+{
+    /**
+     * The model associated with the resource.
+     *
+     * @var string
+     */
+    protected $model = {{ model }}::class;
+}
