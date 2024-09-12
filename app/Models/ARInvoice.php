@@ -1,6 +1,6 @@
 <?php
 
-namespace {{ namespace }};
+namespace App\Models;
 
 use APP\Traits\Filterable;
 // use App\Traits\Sluggable;
@@ -8,7 +8,7 @@ use APP\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class {{ class }} extends Model
+class ARInvoice extends Model
 {
     use HasFactory;
     use Filterable;

@@ -1,0 +1,41 @@
+<?php
+
+namespace App\Models;
+
+use APP\Traits\Filterable;
+// use App\Traits\Sluggable;
+// use App\Traits\Translatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
+use OwenIt\Auditing\Auditable as AuditableTrait;
+
+class ContractorSignoff extends Model implements Auditable
+{
+    use HasFactory, Filterable, AuditableTrait;
+
+    protected $fillable = ['contractor_id', 'work_order_id', 'signed_off_by'];
+
+    protected $casts = [
+        //
+    ];
+
+    protected $translatable = [
+        //
+    ];
+
+    public function contractor()
+    {
+        return $this->belongsTo(Contractor::class);
+    }
+
+    public function workOrderLineItem()
+    {
+        return $this->belongsTo(WorkOrderLineItem::class);
+    }
+
+    public function signedOffBy()
+    {
+        return $this->belongsTo(User::class, 'signed_off_by');
+    }
+}

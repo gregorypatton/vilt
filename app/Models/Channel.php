@@ -1,6 +1,6 @@
 <?php
 
-namespace {{ namespace }};
+namespace App\Models;
 
 use APP\Traits\Filterable;
 // use App\Traits\Sluggable;
@@ -8,7 +8,7 @@ use APP\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class {{ class }} extends Model
+class Channel extends Model
 {
     use HasFactory;
     use Filterable;
@@ -16,7 +16,7 @@ class {{ class }} extends Model
     // use Translatable;
 
     protected $fillable = [
-        //
+        'name'
     ];
 
     protected $casts = [
@@ -27,5 +27,8 @@ class {{ class }} extends Model
         //
     ];
 
-
+    public function products()
+    {
+        return $this->belongsToMany(Product::class)->withPivot('channel_identifier');
+    }
 }

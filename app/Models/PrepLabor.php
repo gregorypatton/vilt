@@ -1,6 +1,6 @@
 <?php
 
-namespace {{ namespace }};
+namespace App\Models;
 
 use APP\Traits\Filterable;
 // use App\Traits\Sluggable;
@@ -8,16 +8,20 @@ use APP\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class {{ class }} extends Model
+class PrepLabor extends Model
 {
-    use HasFactory;
-    use Filterable;
-    // use Sluggable;
-    // use Translatable;
+    use HasFactory, Filterable;
 
     protected $fillable = [
-        //
+        'work_order_id',
+        'hours_spent',
+        'worker_name'
     ];
+
+    public function workOrder()
+    {
+        return $this->belongsTo(WorkOrder::class);
+    }
 
     protected $casts = [
         //
@@ -26,6 +30,4 @@ class {{ class }} extends Model
     protected $translatable = [
         //
     ];
-
-
 }
