@@ -12,20 +12,27 @@ class PaymentInvoice extends Model
 {
     use HasFactory;
     use Filterable;
-    // use Sluggable;
-    // use Translatable;
 
-    protected $fillable = [
-        //
-    ];
+    protected $fillable = ['seller_id', 'payment_id', 'ap_invoice_id', 'ar_invoice_id', 'payment_amount'];
 
-    protected $casts = [
-        //
-    ];
+    public function seller()
+    {
+        return $this->belongsTo(Seller::class);
+    }
 
-    protected $translatable = [
-        //
-    ];
+    public function payment()
+    {
+        return $this->belongsTo(Payment::class);
+    }
 
+    public function apInvoice()
+    {
+        return $this->belongsTo(ApInvoice::class, 'ap_invoice_id');
+    }
+
+    public function arInvoice()
+    {
+        return $this->belongsTo(ArInvoice::class, 'ar_invoice_id');
+    }
 
 }

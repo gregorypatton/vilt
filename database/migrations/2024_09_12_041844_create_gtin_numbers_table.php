@@ -11,17 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('gtin_numbers', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('seller_id');
-            $table->unsignedBigInteger('user_id');
-            $table->decimal('amount', 10, 2);
-            $table->enum('payment_type', ['cash', 'credit', 'bank_transfer']);
-            $table->date('payment_date');
+            $table->unsignedBigInteger('seller_id'); // Multi-tenant association
+            $table->string('gtin')->unique(); // Storing GTINs from GS1 DB
+            $table->datetime('expires_on')->nullable(); // Storing GTINs from GS1 DB
+            $table->enum('status', ['active', 'used', 'expired', 'invalid'])->default('active');
             $table->timestamps();
 
             $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('gtin_numbers');
     }
 };

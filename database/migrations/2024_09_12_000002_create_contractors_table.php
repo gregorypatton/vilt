@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('pin_number'); // New field for secure identification
             $table->timestamps();
             $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

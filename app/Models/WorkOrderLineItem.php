@@ -2,19 +2,21 @@
 
 namespace App\Models;
 
-use APP\Traits\Filterable;
-// use App\Traits\Sluggable;
-// use App\Traits\Translatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 use OwenIt\Auditing\Auditable as AuditableTrait;
+use App\Enums\WorkOrderPriorityEnum;
 
 class WorkOrderLineItem extends Model implements Auditable
 {
-    use AuditableTrait, HasFactory, Filterable;
+    use AuditableTrait, HasFactory;
 
-    protected $fillable = ['purchase_order_id', 'contractor_id', 'status', 'channel_id'];
+    protected $fillable = ['purchase_order_id', 'contractor_id', 'status', 'channel_id', 'priority'];
+
+    protected $casts = [
+        'priority' => WorkOrderPriorityEnum::class, // Cast the priority to the enum
+    ];
 
     public function purchaseOrder()
     {
@@ -35,12 +37,4 @@ class WorkOrderLineItem extends Model implements Auditable
     {
         return $this->hasMany(WorkOrderLineItem::class);
     }
-
-    protected $casts = [
-        //
-    ];
-
-    protected $translatable = [
-        //
-    ];
 }

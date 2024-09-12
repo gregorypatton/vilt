@@ -12,20 +12,23 @@ class Payment extends Model
 {
     use HasFactory;
     use Filterable;
-    // use Sluggable;
-    // use Translatable;
 
-    protected $fillable = [
-        //
-    ];
+    protected $fillable = ['seller_id', 'user_id', 'amount', 'payment_type', 'payment_date'];
 
-    protected $casts = [
-        //
-    ];
+    public function seller()
+    {
+        return $this->belongsTo(Seller::class);
+    }
 
-    protected $translatable = [
-        //
-    ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function invoices()
+    {
+        return $this->hasMany(PaymentInvoice::class);
+    }
 
 
 }

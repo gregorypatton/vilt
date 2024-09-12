@@ -13,9 +13,15 @@ return new class extends Migration
     {
         Schema::create('suppliers', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('seller_id');
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('address')->nullable();
             $table->string('name');
-            $table->text('contact_info');
+            $table->string('contact_name')->nullable();
             $table->timestamps();
+             $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
+      
         });
     }
 
@@ -25,6 +31,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('suppliers');
+        Schema::table('suppliers', function (Blueprint $table) {
+            $table->dropForeign(['seller_id']);
+            $table->dropColumn(['seller_id', 'email', 'phone', 'address']);
+        });
     }
 };

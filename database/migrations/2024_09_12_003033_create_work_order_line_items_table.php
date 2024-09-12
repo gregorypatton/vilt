@@ -18,9 +18,10 @@ return new class extends Migration
             $table->unsignedBigInteger('product_id');
             $table->integer('total_required');
             $table->integer('total_completed')->default(0);
+            $table->integer('priority')->default(3); // Default priority: NORMAL
             $table->timestamps();
-            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
 
+            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
             $table->foreign('work_order_id')->references('id')->on('work_orders')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });

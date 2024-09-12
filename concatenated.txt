@@ -1,5 +1,552 @@
 
 
+==== database\factories\ChannelFactory.php ====
+
+<?php
+
+namespace Database\Factories;
+
+use App\Models\Channel;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class ChannelFactory extends Factory
+{
+    protected $model = Channel::class;
+
+    public function definition()
+    {
+        return [
+            'name' => $this->faker->company,
+        ];
+    }
+}
+
+
+==== database\factories\ChirpFactory.php ====
+
+<?php
+
+namespace Database\Factories;
+
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Chirp>
+ */
+class ChirpFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        return [
+            //
+        ];
+    }
+}
+
+
+==== database\factories\ContractorFactory.php ====
+
+<?php
+
+namespace Database\Factories;
+
+use App\Models\Contractor;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class ContractorFactory extends Factory
+{
+    protected $model = Contractor::class;
+
+    public function definition(): array
+    {
+        return [
+            'user_id' => \App\Models\User::factory(),
+            'name' => $this->faker->name(),
+            'email' => $this->faker->unique()->safeEmail(),
+            'phone_number' => $this->faker->phoneNumber(),
+            'pin_number' => $this->faker->randomNumber(4),
+        ];
+    }
+}
+
+
+==== database\factories\ContractorSignoffFactory.php ====
+
+<?php
+
+namespace Database\Factories;
+
+use App\Models\ContractorSignoff;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class ContractorSignoffFactory extends Factory
+{
+    protected $model = ContractorSignoff::class;
+
+    public function definition(): array
+    {
+        return [
+            'contractor_id' => \App\Models\Contractor::factory(),
+            'work_order_line_item_id' => \App\Models\WorkOrderLineItem::factory(),
+            'quantity_signed' => $this->faker->numberBetween(1, 100),
+            'signed_at' => $this->faker->dateTimeThisMonth(),
+        ];
+    }
+}
+
+
+==== database\factories\LocationFactory.php ====
+
+<?php
+
+namespace Database\Factories;
+
+use App\Models\Location;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class LocationFactory extends Factory
+{
+    protected $model = Location::class;
+
+    public function definition(): array
+    {
+        return [
+            'name' => $this->faker->city,
+            'seller_id' => \App\Models\Seller::factory(),
+        ];
+    }
+}
+
+
+==== database\factories\PageFactory.php ====
+
+<?php
+
+namespace Database\Factories;
+
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Page>
+ */
+class PageFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        return [
+            //
+        ];
+    }
+}
+
+
+==== database\factories\PartFactory.php ====
+
+<?php
+
+namespace Database\Factories;
+
+use App\Models\Part;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class PartFactory extends Factory
+{
+    protected $model = Part::class;
+
+    public function definition(): array
+    {
+        return [
+            'name' => $this->faker->word,
+            'description' => $this->faker->sentence,
+            'stock_quantity' => $this->faker->numberBetween(1, 1000),
+            'supplier_id' => \App\Models\Supplier::factory(),
+            'seller_id' => \App\Models\Seller::factory(),
+        ];
+    }
+}
+
+
+==== database\factories\PartInventoryFactory.php ====
+
+<?php
+
+namespace Database\Factories;
+
+use App\Models\PartInventory;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class PartInventoryFactory extends Factory
+{
+    protected $model = PartInventory::class;
+
+    public function definition()
+    {
+        return [
+            'part_id' => \App\Models\Part::factory(),
+            'location_id' => \App\Models\Location::factory(),
+            'quantity' => $this->faker->numberBetween(1, 500),
+            'last_change_user' => \App\Models\User::factory(),
+            'last_change_ts' => now(),
+            'seller_id' => \App\Models\Seller::factory(),
+        ];
+    }
+}
+
+
+==== database\factories\PrepLaborFactory.php ====
+
+<?php
+
+namespace Database\Factories;
+
+use App\Models\PrepLabor;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class PrepLaborFactory extends Factory
+{
+    protected $model = PrepLabor::class;
+
+    public function definition(): array
+    {
+        return [
+            'seller_id' => \App\Models\Seller::factory(),
+            'labor_name' => $this->faker->name(),
+            'labor_cost' => $this->faker->randomFloat(2, 20, 500),
+        ];
+    }
+}
+
+
+==== database\factories\ProductFactory.php ====
+
+<?php
+
+namespace Database\Factories;
+
+use App\Models\Product;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class ProductFactory extends Factory
+{
+    protected $model = Product::class;
+
+    public function definition()
+    {
+        return [
+            'name' => $this->faker->word,
+            'description' => $this->faker->paragraph,
+            'price' => $this->faker->randomFloat(2, 10, 1000),
+            'seller_id' => \App\Models\Seller::factory(),
+        ];
+    }
+}
+
+
+==== database\factories\ProductPartFactory.php ====
+
+<?php
+
+namespace Database\Factories;
+
+use App\Models\ProductPart;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class ProductPartFactory extends Factory
+{
+    protected $model = ProductPart::class;
+
+    public function definition()
+    {
+        return [
+            'product_id' => \App\Models\Product::factory(),
+            'part_id' => \App\Models\Part::factory(),
+            'quantity' => $this->faker->numberBetween(1, 100),
+        ];
+    }
+}
+
+
+==== database\factories\PurchaseOrderFactory.php ====
+
+<?php
+
+namespace Database\Factories;
+
+use App\Models\PurchaseOrder;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class PurchaseOrderFactory extends Factory
+{
+    protected $model = PurchaseOrder::class;
+
+    public function definition()
+    {
+        return [
+            'po_number' => $this->faker->unique()->numerify('PO-#####'),
+            'supplier_id' => \App\Models\Supplier::factory(),
+            'total_amount' => $this->faker->randomFloat(2, 100, 10000),
+            'status' => $this->faker->randomElement(['pending', 'completed']),
+            'seller_id' => \App\Models\Seller::factory(),
+        ];
+    }
+}
+
+
+==== database\factories\PurchaseOrderPartFactory.php ====
+
+<?php
+
+namespace Database\Factories;
+
+use App\Models\PurchaseOrderPart;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class PurchaseOrderPartFactory extends Factory
+{
+    protected $model = PurchaseOrderPart::class;
+
+    public function definition()
+    {
+        return [
+            'purchase_order_id' => \App\Models\PurchaseOrder::factory(),
+            'part_id' => \App\Models\Part::factory(),
+            'quantity' => $this->faker->numberBetween(1, 100),
+            'cost' => $this->faker->randomFloat(2, 10, 500),
+        ];
+    }
+}
+
+
+==== database\factories\ReportFactory.php ====
+
+<?php
+
+namespace Database\Factories;
+
+use App\Models\Report;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class ReportFactory extends Factory
+{
+    protected $model = Report::class;
+
+    public function definition()
+    {
+        return [
+            'title' => $this->faker->sentence,
+            'description' => $this->faker->paragraph,
+            'user_id' => \App\Models\User::factory(),
+            'status' => $this->faker->randomElement(['open', 'closed']),
+            'generated_at' => now(),
+        ];
+    }
+}
+
+
+==== database\factories\SellerFactory.php ====
+
+<?php
+
+namespace Database\Factories;
+
+use App\Models\Seller;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class SellerFactory extends Factory
+{
+    protected $model = Seller::class;
+
+    public function definition()
+    {
+        return [
+            'name' => $this->faker->company,
+            'subscription_status' => $this->faker->randomElement(['active', 'inactive']),
+        ];
+    }
+}
+
+
+==== database\factories\SettlementFactory.php ====
+
+<?php
+
+namespace Database\Factories;
+
+use App\Models\Settlement;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class SettlementFactory extends Factory
+{
+    protected $model = Settlement::class;
+
+    public function definition()
+    {
+        return [
+            'seller_id' => \App\Models\Seller::factory(),
+            'amount' => $this->faker->randomFloat(2, 100, 10000),
+            'status' => $this->faker->randomElement(['pending', 'settled']),
+        ];
+    }
+}
+
+
+==== database\factories\SupplierFactory.php ====
+
+<?php
+
+namespace Database\Factories;
+
+use App\Models\Supplier;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class SupplierFactory extends Factory
+{
+    protected $model = Supplier::class;
+
+    public function definition()
+    {
+        return [
+            'name' => $this->faker->company,
+            'contact_info' => $this->faker->phoneNumber,
+        ];
+    }
+}
+
+
+==== database\factories\TranslationFactory.php ====
+
+<?php
+
+namespace Database\Factories;
+
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Translation>
+ */
+class TranslationFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        return [
+            //
+        ];
+    }
+}
+
+
+==== database\factories\UserFactory.php ====
+
+<?php
+
+namespace Database\Factories;
+
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
+
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ */
+class UserFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        return [
+            'name' => fake()->name(),
+            'email' => fake()->unique()->safeEmail(),
+            'email_verified_at' => now(),
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'remember_token' => Str::random(10),
+        ];
+    }
+
+    /**
+     * Indicate that the model's email address should be unverified.
+     */
+    public function unverified(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'email_verified_at' => null,
+        ]);
+    }
+}
+
+
+==== database\factories\WorkOrderFactory.php ====
+
+<?php
+
+namespace Database\Factories;
+
+use App\Models\WorkOrder;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\WorkOrder>
+ */
+class WorkOrderFactory extends Factory
+{
+    protected $model = WorkOrder::class;
+
+    public function definition(): array
+    {
+        return [
+            'purchase_order_id' => \App\Models\PurchaseOrder::factory(),
+            'contractor_id' => \App\Models\Contractor::factory(),
+            'status' => $this->faker->randomElement(['pending', 'in_progress', 'completed']),
+        ];
+    }
+}
+
+
+==== database\factories\WorkOrderLineItemFactory.php ====
+
+<?php
+
+namespace Database\Factories;
+
+use App\Models\WorkOrderLineItem;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\WorkOrderLineItem>
+ */
+class WorkOrderLineItemFactory extends Factory
+{
+    protected $model = WorkOrderLineItem::class;
+
+    public function definition(): array
+    {
+        return [
+            'work_order_id' => \App\Models\WorkOrder::factory(),
+            'product_id' => \App\Models\Product::factory(),
+            'total_required' => $this->faker->numberBetween(1, 100),
+            'total_completed' => $this->faker->numberBetween(0, 100),
+        ];
+    }
+}
+
+
 ==== database\migrations\2014_10_12_000000_create_users_table.php ====
 
 <?php
@@ -313,6 +860,7 @@ return new class extends Migration
             $table->string('pin_number'); // New field for secure identification
             $table->timestamps();
             $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -344,9 +892,15 @@ return new class extends Migration
     {
         Schema::create('suppliers', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('seller_id');
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('address')->nullable();
             $table->string('name');
-            $table->text('contact_info');
+            $table->string('contact_name')->nullable();
             $table->timestamps();
+             $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
+      
         });
     }
 
@@ -356,7 +910,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('suppliers');
+        Schema::table('suppliers', function (Blueprint $table) {
+            $table->dropForeign(['seller_id']);
+            $table->dropColumn(['seller_id', 'email', 'phone', 'address']);
+        });
     }
 };
 
@@ -605,7 +1162,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->longText('description');
-            $table->string('sellable_id');
+            $table->string('sellable_id')->nullable();
+            $table->string('gtin');
+            $table->string('supplier_id');
             $table->decimal('price', 10, 2);
             $table->unsignedBigInteger('seller_id');
             $table->timestamps();
@@ -717,9 +1276,17 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
+            $table->string('gtin')->nullable();
             $table->integer('stock_quantity');
+            $table->integer('seller_identifier')->unique();
             $table->unsignedBigInteger('supplier_id');
             $table->unsignedBigInteger('seller_id');
+            $table->decimal('cost_price', 10, 2);
+            $table->decimal('sale_price', 10, 2)->nullable();
+            $table->string('weight_unit_of_measure')->default('oz');
+            $table->string('dimension_unit_of_measure')->default('oz');
+            $table->decimal('weight', 8, 2)->nullable();
+            $table->json('dimensions')->nullable(); // Array [l,w,h]
             $table->timestamps();
 
             $table->foreign('supplier_id')->references('id')->on('suppliers')->onDelete('cascade');
@@ -760,9 +1327,10 @@ return new class extends Migration
             $table->unsignedBigInteger('product_id');
             $table->integer('total_required');
             $table->integer('total_completed')->default(0);
+            $table->integer('priority')->default(3); // Default priority: NORMAL
             $table->timestamps();
-            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
 
+            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
             $table->foreign('work_order_id')->references('id')->on('work_orders')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
@@ -857,48 +1425,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('product_parts');
-    }
-};
-
-
-==== database\migrations\2024_09_12_003158_create_part_inventories_table.php ====
-
-<?php
-
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
-
-return new class extends Migration
-{
-    /**
-     * Run the migrations.
-     */
-    public function up()
-    {
-        Schema::create('part_inventories', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('part_id');
-            $table->unsignedBigInteger('location_id');
-            $table->integer('quantity');
-            $table->unsignedBigInteger('last_change_user');
-            $table->timestamp('last_change_ts');
-            $table->unsignedBigInteger('seller_id');
-            $table->timestamps();
-
-            $table->foreign('part_id')->references('id')->on('parts')->onDelete('cascade');
-            $table->foreign('location_id')->references('id')->on('locations')->onDelete('cascade');
-            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
-        });
-    }
-
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('part_inventories');
     }
 };
 
@@ -1140,5 +1666,1578 @@ return new class extends Migration
         Schema::drop($tableNames['model_has_permissions']);
         Schema::drop($tableNames['roles']);
         Schema::drop($tableNames['permissions']);
+    }
+};
+
+
+==== database\migrations\2024_09_12_035130_create_a_p_invoices_table.php ====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+       Schema::create('ap_invoices', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('seller_id');
+            $table->unsignedBigInteger('supplier_id');
+            $table->decimal('amount', 10, 2);
+            $table->date('invoice_date');
+            $table->date('due_date');
+            $table->enum('status', ['unpaid', 'paid', 'overdue'])->default('unpaid');
+            $table->timestamps();
+
+            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
+            $table->foreign('supplier_id')->references('id')->on('suppliers')->onDelete('cascade');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('a_p_invoices');
+    }
+};
+
+
+==== database\migrations\2024_09_12_035135_create_a_r_invoices_table.php ====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('ar_invoices', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('seller_id');
+         // Not yet...
+         // $table->unsignedBigInteger('customer_id');
+            $table->decimal('amount', 10, 2);
+            $table->date('invoice_date');
+            $table->date('due_date');
+            $table->enum('status', ['unpaid', 'paid', 'overdue'])->default('unpaid');
+            $table->timestamps();
+
+            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
+          //  $table->foreign('customer_id')->references('id')->on('users')->onDelete('cascade');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('a_r_invoices');
+    }
+};
+
+
+==== database\migrations\2024_09_12_035424_create_payments_table.php ====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('payments', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('seller_id');
+            $table->unsignedBigInteger('user_id');
+            $table->decimal('amount', 10, 2);
+            $table->enum('payment_type', ['cash', 'credit', 'bank_transfer']);
+            $table->date('payment_date');
+            $table->timestamps();
+
+            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('payments');
+    }
+};
+
+
+==== database\migrations\2024_09_12_035510_create_payment_invoices_table.php ====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        //
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        //
+    }
+};
+
+
+==== database\migrations\2024_09_12_035612_create_part_locations_table.php ====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+    
+        Schema::create('part_locations', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('seller_id');
+            $table->unsignedBigInteger('part_id');
+            $table->unsignedBigInteger('location_id');
+            $table->integer('quantity');
+            $table->timestamps();
+
+            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
+            $table->foreign('part_id')->references('id')->on('parts')->onDelete('cascade');
+            $table->foreign('location_id')->references('id')->on('locations')->onDelete('cascade');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('product_locations');
+    }
+};
+
+
+==== database\migrations\2024_09_12_041844_create_gtin_numbers_table.php ====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('gtin_numbers', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('seller_id'); // Multi-tenant association
+            $table->string('gtin')->unique(); // Storing GTINs from GS1 DB
+            $table->datetime('expires_on')->nullable(); // Storing GTINs from GS1 DB
+            $table->enum('status', ['active', 'used', 'expired', 'invalid'])->default('active');
+            $table->timestamps();
+
+            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('gtin_numbers');
+    }
+};
+
+
+==== database\migrations\2014_10_12_000000_create_users_table.php ====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('users', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->boolean('is_administrator')->default(false);
+            $table->rememberToken();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('users');
+    }
+};
+
+
+==== database\migrations\2014_10_12_100000_create_password_reset_tokens_table.php ====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('password_reset_tokens', function (Blueprint $table) {
+            $table->string('email')->primary();
+            $table->string('token');
+            $table->timestamp('created_at')->nullable();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('password_reset_tokens');
+    }
+};
+
+
+==== database\migrations\2019_08_19_000000_create_failed_jobs_table.php ====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('failed_jobs', function (Blueprint $table) {
+            $table->id();
+            $table->string('uuid')->unique();
+            $table->text('connection');
+            $table->text('queue');
+            $table->longText('payload');
+            $table->longText('exception');
+            $table->timestamp('failed_at')->useCurrent();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('failed_jobs');
+    }
+};
+
+
+==== database\migrations\2019_12_14_000001_create_personal_access_tokens_table.php ====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('personal_access_tokens', function (Blueprint $table) {
+            $table->id();
+            $table->morphs('tokenable');
+            $table->string('name');
+            $table->string('token', 64)->unique();
+            $table->text('abilities')->nullable();
+            $table->timestamp('last_used_at')->nullable();
+            $table->timestamp('expires_at')->nullable();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('personal_access_tokens');
+    }
+};
+
+
+==== database\migrations\2023_07_08_091501_create_pages_table.php ====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('pages', function (Blueprint $table) {
+            $table->id();
+            $table->string('slug')->unique();
+            $table->string('title');
+            $table->text('content');
+            $table->enum('status', ['draft', 'published'])->default('draft');
+            $table->enum('visibility', ['public', 'private'])->default('public');
+            $table->enum('placement', ['header', 'footer', 'menu'])->nullable();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('pages');
+    }
+};
+
+
+==== database\migrations\2023_07_09_164018_create_translations_table.php ====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('translations', function (Blueprint $table) {
+            $table->id();
+            $table->morphs('translatable');
+            $table->string('locale')->index();
+            $table->string('key')->index();
+            $table->text('value');
+            $table->timestamps();
+
+            $table->unique(['translatable_id', 'translatable_type', 'locale', 'key'], 'translatable_locale_key_unique');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('translations');
+    }
+};
+
+
+==== database\migrations\2023_07_10_180739_create_chirps_table.php ====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('chirps', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->string('message');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('chirps');
+    }
+};
+
+
+==== database\migrations\2024_09_12_000000_create_sellers_table.php ====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up()
+    {
+        Schema::create('sellers', function (Blueprint $table) {
+            $table->id();
+
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->string('name');
+            $table->enum('subscription_status', ['active', 'inactive', 'pending']);
+            $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        });
+    }
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::table('sellers', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+            $table->dropColumn('user_id');
+        });
+        Schema::dropIfExists('sellers');
+    }
+};
+
+
+==== database\migrations\2024_09_12_000002_create_contractors_table.php ====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up()
+    {
+        Schema::create('contractors', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('seller_id');
+            $table->string('name');
+            $table->string('email');
+            $table->string('phone_number');
+            $table->string('pin_number'); // New field for secure identification
+            $table->timestamps();
+            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        });
+    }
+
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('contractors');
+    }
+};
+
+
+==== database\migrations\2024_09_12_000011_create_suppliers_table.php ====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up()
+    {
+        Schema::create('suppliers', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('seller_id');
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('address')->nullable();
+            $table->string('name');
+            $table->string('contact_name')->nullable();
+            $table->timestamps();
+             $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
+      
+        });
+    }
+
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::table('suppliers', function (Blueprint $table) {
+            $table->dropForeign(['seller_id']);
+            $table->dropColumn(['seller_id', 'email', 'phone', 'address']);
+        });
+    }
+};
+
+
+==== database\migrations\2024_09_12_000158_create_purchase_orders_table.php ====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up()
+    {
+        Schema::create('purchase_orders', function (Blueprint $table) {
+            $table->id();
+            $table->string('po_number');
+            $table->unsignedBigInteger('supplier_id');
+            $table->decimal('total_amount', 10, 2);
+            $table->enum('status', ['pending', 'completed', 'cancelled']);
+            $table->unsignedBigInteger('seller_id');
+            $table->timestamps();
+
+            $table->foreign('supplier_id')->references('id')->on('suppliers')->onDelete('cascade');
+            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
+        });
+    }
+
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('purchase_orders');
+    }
+};
+
+
+==== database\migrations\2024_09_12_000856_create_reports_table.php ====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('reports', function (Blueprint $table) {
+            $table->id();
+            $table->string('status');
+            $table->enum('type', ['office', 'production', 'supplier'])->nullable();
+            $table->timestamp('generated_at')->nullable();
+            $table->unsignedBigInteger('seller_id');
+            $table->timestamps();
+            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('reports');
+    }
+};
+
+
+==== database\migrations\2024_09_12_002029_create_work_orders_table.php ====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up()
+    {
+        Schema::create('work_orders', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('purchase_order_id');
+            $table->unsignedBigInteger('seller_id');
+            $table->unsignedBigInteger('contractor_id');
+            $table->enum('status', ['pending', 'in_progress', 'completed']);
+            $table->timestamps();
+
+            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
+            $table->foreign('purchase_order_id')->references('id')->on('purchase_orders')->onDelete('cascade');
+            $table->foreign('contractor_id')->references('id')->on('contractors')->onDelete('cascade');
+        });
+    }
+
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('work_orders');
+    }
+};
+
+
+==== database\migrations\2024_09_12_002158_create_locations_table.php ====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up()
+    {
+        Schema::create('locations', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->unsignedBigInteger('seller_id');
+            $table->timestamps();
+
+            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
+        });
+    }
+
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('locations');
+    }
+};
+
+
+==== database\migrations\2024_09_12_002201_create_prep_labors_table.php ====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up()
+    {
+        Schema::create('prep_labors', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('seller_id');
+            $table->string('labor_name');
+            $table->decimal('labor_cost', 10, 2);
+            $table->timestamps();
+
+            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('prep_labors');
+    }
+};
+
+
+==== database\migrations\2024_09_12_002201_create_settlements_table.php ====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up()
+    {
+        Schema::create('settlements', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('seller_id');
+            $table->decimal('amount', 10, 2);
+            $table->enum('status', ['pending', 'completed']);
+            $table->timestamps();
+
+            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('settlements');
+    }
+};
+
+
+==== database\migrations\2024_09_12_003003_create_products_table.php ====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up()
+    {
+        Schema::create('products', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->longText('description');
+            $table->string('sellable_id')->nullable();
+            $table->string('gtin');
+            $table->string('supplier_id');
+            $table->decimal('price', 10, 2);
+            $table->unsignedBigInteger('seller_id');
+            $table->timestamps();
+
+            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
+        });
+    }
+
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('products');
+    }
+};
+
+
+==== database\migrations\2024_09_12_003010_create_channels_table.php ====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up()
+    {
+        Schema::create('channels', function (Blueprint $table) {
+            $table->id();
+            $table->string('name'); // Channel name (e.g., Amazon, Shopify)
+            $table->unsignedBigInteger('seller_id');
+            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
+            $table->timestamps();
+        });
+    }
+
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('channels');
+    }
+};
+
+
+==== database\migrations\2024_09_12_003019_create_product_channel_table.php ====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up()
+    {
+        Schema::create('product_channel', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('channel_id');
+            $table->string('channel_identifier'); // How product is identified on the channel (e.g., SKU)
+            $table->timestamps();
+
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreign('channel_id')->references('id')->on('channels')->onDelete('cascade');
+        });
+    }
+
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('product_channel');
+    }
+};
+
+
+==== database\migrations\2024_09_12_003024_create_parts_table.php ====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up()
+    {
+        Schema::create('parts', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->text('description');
+            $table->string('gtin')->nullable();
+            $table->integer('stock_quantity');
+            $table->integer('seller_identifier')->unique();
+            $table->unsignedBigInteger('supplier_id');
+            $table->unsignedBigInteger('seller_id');
+            $table->decimal('cost_price', 10, 2);
+            $table->decimal('sale_price', 10, 2)->nullable();
+            $table->string('weight_unit_of_measure')->default('oz');
+            $table->string('dimension_unit_of_measure')->default('oz');
+            $table->decimal('weight', 8, 2)->nullable();
+            $table->json('dimensions')->nullable(); // Array [l,w,h]
+            $table->timestamps();
+
+            $table->foreign('supplier_id')->references('id')->on('suppliers')->onDelete('cascade');
+            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
+        });
+    }
+
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('parts');
+    }
+};
+
+
+==== database\migrations\2024_09_12_003033_create_work_order_line_items_table.php ====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up()
+    {
+        Schema::create('work_order_line_items', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('seller_id');
+            $table->unsignedBigInteger('work_order_id');
+            $table->unsignedBigInteger('product_id');
+            $table->integer('total_required');
+            $table->integer('total_completed')->default(0);
+            $table->integer('priority')->default(3); // Default priority: NORMAL
+            $table->timestamps();
+
+            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
+            $table->foreign('work_order_id')->references('id')->on('work_orders')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+        });
+    }
+
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('work_order_line_items');
+    }
+};
+
+
+==== database\migrations\2024_09_12_003042_create_contractor_signoffs_table.php ====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up()
+    {
+        Schema::create('contractor_signoffs', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('work_order_line_item_id');
+            $table->unsignedBigInteger('contractor_id');
+            $table->unsignedBigInteger('seller_id');
+
+            $table->integer('quantity_signed');
+            $table->timestamp('signed_at');
+            $table->timestamps();
+            $table->foreign('work_order_line_item_id')->references('id')->on('work_order_line_items')->onDelete('cascade');
+            $table->foreign('contractor_id')->references('id')->on('contractors')->onDelete('cascade');
+            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
+        });
+    }
+
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('contractor_signoffs');
+    }
+};
+
+
+==== database\migrations\2024_09_12_003157_create_product_parts_table.php ====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up()
+    {
+        Schema::create('product_parts', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('part_id');
+            $table->unsignedBigInteger('seller_id');
+
+            $table->integer('quantity');
+            $table->timestamps();
+
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
+            $table->foreign('part_id')->references('id')->on('parts')->onDelete('cascade');
+        });
+    }
+
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('product_parts');
+    }
+};
+
+
+==== database\migrations\2024_09_12_003159_create_purchase_order_parts_table.php ====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up()
+    {
+        Schema::create('purchase_order_parts', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('purchase_order_id');
+            $table->unsignedBigInteger('part_id');
+            $table->integer('quantity');
+            $table->decimal('cost', 10, 2);
+            $table->timestamps();
+            $table->unsignedBigInteger('seller_id');
+            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
+
+            $table->foreign('purchase_order_id')->references('id')->on('purchase_orders')->onDelete('cascade');
+            $table->foreign('part_id')->references('id')->on('parts')->onDelete('cascade');
+        });
+    }
+
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('purchase_order_parts');
+    }
+};
+
+
+==== database\migrations\2024_09_12_004327_create_audits_table.php ====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateAuditsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        $connection = config('audit.drivers.database.connection', config('database.default'));
+        $table = config('audit.drivers.database.table', 'audits');
+
+        Schema::connection($connection)->create($table, function (Blueprint $table) {
+
+            $morphPrefix = config('audit.user.morph_prefix', 'user');
+
+            $table->bigIncrements('id');
+            $table->string($morphPrefix . '_type')->nullable();
+            $table->unsignedBigInteger($morphPrefix . '_id')->nullable();
+            $table->string('event');
+            $table->morphs('auditable');
+            $table->json('old_values')->nullable();
+            $table->json('new_values')->nullable();
+            $table->text('url')->nullable();
+            $table->ipAddress('ip_address')->nullable();
+            $table->string('user_agent', 1023)->nullable();
+            $table->string('tags')->nullable();
+            $table->timestamps();
+
+            $table->index([$morphPrefix . '_id', $morphPrefix . '_type']);
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        $connection = config('audit.drivers.database.connection', config('database.default'));
+        $table = config('audit.drivers.database.table', 'audits');
+
+        Schema::connection($connection)->drop($table);
+    }
+}
+
+
+==== database\migrations\2024_09_12_023551_create_permission_tables.php ====
+
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        $teams = config('permission.teams');
+        $tableNames = config('permission.table_names');
+        $columnNames = config('permission.column_names');
+        $pivotRole = $columnNames['role_pivot_key'] ?? 'role_id';
+        $pivotPermission = $columnNames['permission_pivot_key'] ?? 'permission_id';
+
+        if (empty($tableNames)) {
+            throw new \Exception('Error: config/permission.php not loaded. Run [php artisan config:clear] and try again.');
+        }
+        if ($teams && empty($columnNames['team_foreign_key'] ?? null)) {
+            throw new \Exception('Error: team_foreign_key on config/permission.php not loaded. Run [php artisan config:clear] and try again.');
+        }
+
+        Schema::create($tableNames['permissions'], function (Blueprint $table) {
+            //$table->engine('InnoDB');
+            $table->bigIncrements('id'); // permission id
+            $table->string('name');       // For MyISAM use string('name', 225); // (or 166 for InnoDB with Redundant/Compact row format)
+            $table->string('guard_name'); // For MyISAM use string('guard_name', 25);
+            $table->timestamps();
+
+            $table->unique(['name', 'guard_name']);
+        });
+
+        Schema::create($tableNames['roles'], function (Blueprint $table) use ($teams, $columnNames) {
+            //$table->engine('InnoDB');
+            $table->bigIncrements('id'); // role id
+            if ($teams || config('permission.testing')) { // permission.testing is a fix for sqlite testing
+                $table->unsignedBigInteger($columnNames['team_foreign_key'])->nullable();
+                $table->index($columnNames['team_foreign_key'], 'roles_team_foreign_key_index');
+            }
+            $table->string('name');       // For MyISAM use string('name', 225); // (or 166 for InnoDB with Redundant/Compact row format)
+            $table->string('guard_name'); // For MyISAM use string('guard_name', 25);
+            $table->timestamps();
+            if ($teams || config('permission.testing')) {
+                $table->unique([$columnNames['team_foreign_key'], 'name', 'guard_name']);
+            } else {
+                $table->unique(['name', 'guard_name']);
+            }
+        });
+
+        Schema::create($tableNames['model_has_permissions'], function (Blueprint $table) use ($tableNames, $columnNames, $pivotPermission, $teams) {
+            $table->unsignedBigInteger($pivotPermission);
+
+            $table->string('model_type');
+            $table->unsignedBigInteger($columnNames['model_morph_key']);
+            $table->index([$columnNames['model_morph_key'], 'model_type'], 'model_has_permissions_model_id_model_type_index');
+
+            $table->foreign($pivotPermission)
+                ->references('id') // permission id
+                ->on($tableNames['permissions'])
+                ->onDelete('cascade');
+            if ($teams) {
+                $table->unsignedBigInteger($columnNames['team_foreign_key']);
+                $table->index($columnNames['team_foreign_key'], 'model_has_permissions_team_foreign_key_index');
+
+                $table->primary([$columnNames['team_foreign_key'], $pivotPermission, $columnNames['model_morph_key'], 'model_type'],
+                    'model_has_permissions_permission_model_type_primary');
+            } else {
+                $table->primary([$pivotPermission, $columnNames['model_morph_key'], 'model_type'],
+                    'model_has_permissions_permission_model_type_primary');
+            }
+
+        });
+
+        Schema::create($tableNames['model_has_roles'], function (Blueprint $table) use ($tableNames, $columnNames, $pivotRole, $teams) {
+            $table->unsignedBigInteger($pivotRole);
+
+            $table->string('model_type');
+            $table->unsignedBigInteger($columnNames['model_morph_key']);
+            $table->index([$columnNames['model_morph_key'], 'model_type'], 'model_has_roles_model_id_model_type_index');
+
+            $table->foreign($pivotRole)
+                ->references('id') // role id
+                ->on($tableNames['roles'])
+                ->onDelete('cascade');
+            if ($teams) {
+                $table->unsignedBigInteger($columnNames['team_foreign_key']);
+                $table->index($columnNames['team_foreign_key'], 'model_has_roles_team_foreign_key_index');
+
+                $table->primary([$columnNames['team_foreign_key'], $pivotRole, $columnNames['model_morph_key'], 'model_type'],
+                    'model_has_roles_role_model_type_primary');
+            } else {
+                $table->primary([$pivotRole, $columnNames['model_morph_key'], 'model_type'],
+                    'model_has_roles_role_model_type_primary');
+            }
+        });
+
+        Schema::create($tableNames['role_has_permissions'], function (Blueprint $table) use ($tableNames, $pivotRole, $pivotPermission) {
+            $table->unsignedBigInteger($pivotPermission);
+            $table->unsignedBigInteger($pivotRole);
+
+            $table->foreign($pivotPermission)
+                ->references('id') // permission id
+                ->on($tableNames['permissions'])
+                ->onDelete('cascade');
+
+            $table->foreign($pivotRole)
+                ->references('id') // role id
+                ->on($tableNames['roles'])
+                ->onDelete('cascade');
+
+            $table->primary([$pivotPermission, $pivotRole], 'role_has_permissions_permission_id_role_id_primary');
+        });
+
+        app('cache')
+            ->store(config('permission.cache.store') != 'default' ? config('permission.cache.store') : null)
+            ->forget(config('permission.cache.key'));
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        $tableNames = config('permission.table_names');
+
+        if (empty($tableNames)) {
+            throw new \Exception('Error: config/permission.php not found and defaults could not be merged. Please publish the package configuration before proceeding, or drop the tables manually.');
+        }
+
+        Schema::drop($tableNames['role_has_permissions']);
+        Schema::drop($tableNames['model_has_roles']);
+        Schema::drop($tableNames['model_has_permissions']);
+        Schema::drop($tableNames['roles']);
+        Schema::drop($tableNames['permissions']);
+    }
+};
+
+
+==== database\migrations\2024_09_12_035130_create_a_p_invoices_table.php ====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+       Schema::create('ap_invoices', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('seller_id');
+            $table->unsignedBigInteger('supplier_id');
+            $table->decimal('amount', 10, 2);
+            $table->date('invoice_date');
+            $table->date('due_date');
+            $table->enum('status', ['unpaid', 'paid', 'overdue'])->default('unpaid');
+            $table->timestamps();
+
+            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
+            $table->foreign('supplier_id')->references('id')->on('suppliers')->onDelete('cascade');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('a_p_invoices');
+    }
+};
+
+
+==== database\migrations\2024_09_12_035135_create_a_r_invoices_table.php ====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('ar_invoices', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('seller_id');
+         // Not yet...
+         // $table->unsignedBigInteger('customer_id');
+            $table->decimal('amount', 10, 2);
+            $table->date('invoice_date');
+            $table->date('due_date');
+            $table->enum('status', ['unpaid', 'paid', 'overdue'])->default('unpaid');
+            $table->timestamps();
+
+            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
+          //  $table->foreign('customer_id')->references('id')->on('users')->onDelete('cascade');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('a_r_invoices');
+    }
+};
+
+
+==== database\migrations\2024_09_12_035424_create_payments_table.php ====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('payments', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('seller_id');
+            $table->unsignedBigInteger('user_id');
+            $table->decimal('amount', 10, 2);
+            $table->enum('payment_type', ['cash', 'credit', 'bank_transfer']);
+            $table->date('payment_date');
+            $table->timestamps();
+
+            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('payments');
+    }
+};
+
+
+==== database\migrations\2024_09_12_035510_create_payment_invoices_table.php ====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        //
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        //
+    }
+};
+
+
+==== database\migrations\2024_09_12_035612_create_part_locations_table.php ====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+    
+        Schema::create('part_locations', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('seller_id');
+            $table->unsignedBigInteger('part_id');
+            $table->unsignedBigInteger('location_id');
+            $table->integer('quantity');
+            $table->timestamps();
+
+            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
+            $table->foreign('part_id')->references('id')->on('parts')->onDelete('cascade');
+            $table->foreign('location_id')->references('id')->on('locations')->onDelete('cascade');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('product_locations');
+    }
+};
+
+
+==== database\migrations\2024_09_12_041844_create_gtin_numbers_table.php ====
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('gtin_numbers', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('seller_id'); // Multi-tenant association
+            $table->string('gtin')->unique(); // Storing GTINs from GS1 DB
+            $table->datetime('expires_on')->nullable(); // Storing GTINs from GS1 DB
+            $table->enum('status', ['active', 'used', 'expired', 'invalid'])->default('active');
+            $table->timestamps();
+
+            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('gtin_numbers');
     }
 };

@@ -9,30 +9,28 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('part_inventories', function (Blueprint $table) {
+    
+        Schema::create('part_locations', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('seller_id');
             $table->unsignedBigInteger('part_id');
             $table->unsignedBigInteger('location_id');
             $table->integer('quantity');
-            $table->unsignedBigInteger('last_change_user');
-            $table->timestamp('last_change_ts');
-            $table->unsignedBigInteger('seller_id');
             $table->timestamps();
 
+            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
             $table->foreign('part_id')->references('id')->on('parts')->onDelete('cascade');
             $table->foreign('location_id')->references('id')->on('locations')->onDelete('cascade');
-            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
         });
     }
-
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('part_inventories');
+        Schema::dropIfExists('product_locations');
     }
 };

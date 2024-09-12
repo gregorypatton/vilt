@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->longText('description');
-            $table->string('sellable_id');
+            $table->string('sellable_id')->nullable();
+            $table->string('gtin');
+            $table->string('supplier_id');
             $table->decimal('price', 10, 2);
             $table->unsignedBigInteger('seller_id');
             $table->timestamps();

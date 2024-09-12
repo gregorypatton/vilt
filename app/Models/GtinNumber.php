@@ -10,24 +10,19 @@ use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 use OwenIt\Auditing\Auditable as AuditableTrait;
 
-class APInvoice extends Model implements Auditable
+class GtinNumber extends Model implements Auditable
 {
     use HasFactory, Filterable, AuditableTrait;
+    protected $fillable = ['seller_id', 'gtin', 'expires_on', 'status'];
+    protected $casts = [ 'expires_on' => 'datetime:Y-m-d H:i:s'];
 
-    protected $fillable = ['seller_id', 'supplier_id', 'amount', 'invoice_date', 'due_date', 'status'];
-
+    /**
+     * A GTIN belongs to a seller.
+     */
     public function seller()
     {
         return $this->belongsTo(Seller::class);
     }
 
-    public function supplier()
-    {
-        return $this->belongsTo(Supplier::class);
-    }
 
-    public function payments()
-    {
-        return $this->hasMany(PaymentInvoice::class, 'ap_invoice_id');
-    }
 }

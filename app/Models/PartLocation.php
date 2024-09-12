@@ -8,7 +8,7 @@ use APP\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductLocation extends Model
+class PartLocation extends Model
 {
     use HasFactory;
     use Filterable;
@@ -26,6 +26,4 @@ class ProductLocation extends Model
     protected $translatable = [
         //
     ];
-
-
 }
